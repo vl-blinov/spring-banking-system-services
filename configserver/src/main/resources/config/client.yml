@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/client_db
-    username: user
-    password: user
+    username: client
+    password: client
   jpa:
     properties:
       hibernate:
