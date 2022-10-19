@@ -42,6 +42,7 @@ public class ClientService {
         return clientRepository.findAll()
                 .stream()
                 .map(clientMapper::clientToClientResponse)
+                .peek(clientResponse -> log.info("Mapped client: {}", clientResponse))
                 .toList();
     }
 

@@ -42,7 +42,7 @@ public class ClientController {
         log.info("Get list of clients request");
         List<ClientResponse> clientResponseList = clientService.getClients();
         log.info("Client response list; number of clients in the list: {}", clientResponseList.size());
-        return clientService.getClients();
+        return clientResponseList;
     }
 
     @GetMapping("/{clientId}")
