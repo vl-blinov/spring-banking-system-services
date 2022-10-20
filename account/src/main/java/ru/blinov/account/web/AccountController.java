@@ -2,7 +2,9 @@ package ru.blinov.account.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.blinov.account.service.AccountService;
 import ru.blinov.account.web.constant.WebConstant;
@@ -22,19 +24,19 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping
-    public AccountResponse openAccount(@RequestBody AccountOpeningRequest accountOpeningRequest) {
+    public ResponseEntity<AccountResponse> openAccount(@RequestBody AccountOpeningRequest accountOpeningRequest) {
         log.info("Account opening request: {}", accountOpeningRequest);
         AccountResponse accountResponse = accountService.openAccount(accountOpeningRequest);
         log.info("Response with opened account: {}", accountResponse);
-        return accountResponse;
+        return ResponseEntity.ok(accountResponse);
     }
 
     @PutMapping
-    public AccountResponse closeAccount(@RequestBody AccountClosingRequest accountClosingRequest) {
+    public ResponseEntity<AccountResponse> closeAccount(@RequestBody AccountClosingRequest accountClosingRequest) {
         log.info("Account closing request: {}", accountClosingRequest);
         AccountResponse accountResponse = accountService.closeAccount(accountClosingRequest);
         log.info("Response with closed account: {}", accountResponse);
-        return accountResponse;
+        return ResponseEntity.ok(accountResponse);
     }
 
     @GetMapping
@@ -46,14 +48,15 @@ public class AccountController {
     }
 
     @GetMapping("/{accountId}")
-    public AccountResponse getAccountById(@PathVariable Long accountId) {
+    public ResponseEntity<AccountResponse> getAccountById(@PathVariable Long accountId) {
         log.info("Get account by ID request; account ID: {}", accountId);
         AccountResponse accountResponse = accountService.getAccountById(accountId);
         log.info("Response with extracted account: {}", accountResponse);
-        return accountResponse;
+        return ResponseEntity.ok(accountResponse);
     }
 
     @DeleteMapping("/{accountId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccountById(@PathVariable Long accountId) {
         log.info("Delete account by ID request; account ID: {}", accountId);
         accountService.deleteAccountById(accountId);
