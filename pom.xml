@@ -13,6 +13,7 @@
     <module>client</module>
     <module>account</module>
     <module>configserver</module>
+    <module>eurekaserver</module>
   </modules>
 
   <properties>
