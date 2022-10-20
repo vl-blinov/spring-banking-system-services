@@ -56,6 +56,14 @@ public class AccountService {
                 .toList();
     }
 
+    public List<AccountResponse> getAccountsByClientId(Long clientId) {
+        return accountRepository.findAllByClientId(clientId)
+                .stream()
+                .map(accountMapper::AccountToAccountResponse)
+                .peek(accountResponse -> log.info("Mapped account: {}", accountResponse))
+                .toList();
+    }
+
     public AccountResponse getAccountById(Long accountId) {
         Account extractedAccount = accountRepository.findById(accountId)
                 .orElseThrow(() -> new NotFoundException("Account with ID '" + accountId + "' is not found"));
