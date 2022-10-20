@@ -7,8 +7,10 @@ import ru.blinov.client.entity.Client;
 import ru.blinov.client.exception.NotFoundException;
 import ru.blinov.client.mapper.ClientMapper;
 import ru.blinov.client.repository.ClientRepository;
+import ru.blinov.client.service.client.AccountFeignClient;
 import ru.blinov.client.web.request.ClientRegistrationRequest;
 import ru.blinov.client.web.request.ClientUpdateRequest;
+import ru.blinov.client.web.response.AccountResponse;
 import ru.blinov.client.web.response.ClientResponse;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class ClientService {
 
     private ClientRepository clientRepository;
     private ClientMapper clientMapper;
+    private AccountFeignClient accountFeignClient;
 
     public ClientResponse registerClient(ClientRegistrationRequest clientRegistrationRequest) {
         Client client = clientMapper.clientRegistrationRequestToClient(clientRegistrationRequest);
@@ -50,7 +53,16 @@ public class ClientService {
         Client extractedClient = clientRepository.findById(clientId)
                 .orElseThrow(() -> new NotFoundException("Client with ID '" + clientId + "' is not found"));
         log.info("Extracted client: {}", extractedClient);
-        return clientMapper.clientToClientResponse(extractedClient);
+        ClientResponse clientResponse = clientMapper.clientToClientResponse(extractedClient);
+        log.info("Mapped client: {}", clientResponse);
+        List<AccountResponse> accountResponseList = accountFeignClient.getAccountsByClientId(clientId);
+        List<Long> accountsIdList = accountResponseList
+                .stream()
+                .map(AccountResponse::getId)
+                .toList();
+        log.info("List of accounts IDs: {} for client with ID: {}", accountsIdList, clientId);
+        clientResponse.setAccountsIdList(accountsIdList);
+        return clientResponse;
     }
 
     public void deleteClientById(Long clientId) {
