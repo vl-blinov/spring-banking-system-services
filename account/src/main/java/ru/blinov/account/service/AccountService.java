@@ -11,6 +11,7 @@ import ru.blinov.account.web.request.AccountClosingRequest;
 import ru.blinov.account.web.request.AccountOpeningRequest;
 import ru.blinov.account.web.response.AccountResponse;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @Slf4j
 @Service
+@Transactional
 @AllArgsConstructor
 public class AccountService {
 
@@ -75,5 +77,10 @@ public class AccountService {
         getAccountById(accountId);
         accountRepository.deleteById(accountId);
         log.info("Account deleted; account ID: {}", accountId);
+    }
+
+    public void deleteAccountsByClientId(Long clientId) {
+        accountRepository.deleteAllByClientId(clientId);
+        log.info("Accounts for client ID: {} have been deleted", clientId);
     }
 }

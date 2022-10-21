@@ -6,5 +6,8 @@ import ru.blinov.account.entity.Account;
 import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
+
     List<Account> findAllByClientId(Long clientId);
+
+    void deleteAllByClientId(Long clientId);
 }

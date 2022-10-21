@@ -69,4 +69,11 @@ public class AccountController {
         log.info("Delete account by ID request; account ID: {}", accountId);
         accountService.deleteAccountById(accountId);
     }
+
+    @DeleteMapping("/clients/{clientId}/accounts")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAccountsByClientId(@PathVariable Long clientId) {
+        log.info("Delete accounts by client ID request; client ID: {}", clientId);
+        accountService.deleteAccountsByClientId(clientId);
+    }
 }
