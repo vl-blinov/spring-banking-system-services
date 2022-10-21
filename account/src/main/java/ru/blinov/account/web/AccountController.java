@@ -17,13 +17,13 @@ import java.util.List;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = WebConstant.VERSION_URL,
+@RequestMapping(value = WebConstant.VERSION_URL + "/accounts",
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class AccountController {
 
     private AccountService accountService;
 
-    @PostMapping("/accounts")
+    @PostMapping
     public ResponseEntity<AccountResponse> openAccount(@RequestBody AccountOpeningRequest accountOpeningRequest) {
         log.info("Account opening request: {}", accountOpeningRequest);
         AccountResponse accountResponse = accountService.openAccount(accountOpeningRequest);
@@ -31,7 +31,7 @@ public class AccountController {
         return ResponseEntity.ok(accountResponse);
     }
 
-    @PutMapping("/accounts")
+    @PutMapping
     public ResponseEntity<AccountResponse> closeAccount(@RequestBody AccountClosingRequest accountClosingRequest) {
         log.info("Account closing request: {}", accountClosingRequest);
         AccountResponse accountResponse = accountService.closeAccount(accountClosingRequest);
@@ -39,7 +39,7 @@ public class AccountController {
         return ResponseEntity.ok(accountResponse);
     }
 
-    @GetMapping("/accounts")
+    @GetMapping
     public List<AccountResponse> getAccounts() {
         log.info("Get list of accounts request");
         List<AccountResponse> accountResponseList = accountService.getAccounts();
@@ -47,7 +47,7 @@ public class AccountController {
         return accountResponseList;
     }
 
-    @GetMapping("/clients/{clientId}/accounts")
+    @GetMapping("/clients/{clientId}")
     public List<AccountResponse> getAccountsByClientId(@PathVariable Long clientId) {
         log.info("Get list of accounts by client ID request");
         List<AccountResponse> accountResponseList = accountService.getAccountsByClientId(clientId);
@@ -55,7 +55,7 @@ public class AccountController {
         return accountResponseList;
     }
 
-    @GetMapping("/accounts/{accountId}")
+    @GetMapping("/{accountId}")
     public ResponseEntity<AccountResponse> getAccountById(@PathVariable Long accountId) {
         log.info("Get account by ID request; account ID: {}", accountId);
         AccountResponse accountResponse = accountService.getAccountById(accountId);
@@ -63,14 +63,14 @@ public class AccountController {
         return ResponseEntity.ok(accountResponse);
     }
 
-    @DeleteMapping("/accounts/{accountId}")
+    @DeleteMapping("/{accountId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccountById(@PathVariable Long accountId) {
         log.info("Delete account by ID request; account ID: {}", accountId);
         accountService.deleteAccountById(accountId);
     }
 
-    @DeleteMapping("/clients/{clientId}/accounts")
+    @DeleteMapping("/clients/{clientId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccountsByClientId(@PathVariable Long clientId) {
         log.info("Delete accounts by client ID request; client ID: {}", clientId);

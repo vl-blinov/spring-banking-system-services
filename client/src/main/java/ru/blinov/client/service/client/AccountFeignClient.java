@@ -11,9 +11,9 @@ import java.util.List;
 
 @FeignClient("account")
 public interface AccountFeignClient {
-    @GetMapping(WebConstant.VERSION_URL + "/clients/{clientId}/accounts")
+    @GetMapping(WebConstant.VERSION_URL + "/accounts/clients/{clientId}")
     List<AccountResponse> getAccountsByClientId(@PathVariable("clientId") Long clientId);
 
-    @DeleteMapping(WebConstant.VERSION_URL + "/clients/{clientId}/accounts")
+    @DeleteMapping(WebConstant.VERSION_URL + "/accounts/clients/{clientId}")
     void deleteAccountsByClientId(@PathVariable("clientId") Long clientId);
 }
