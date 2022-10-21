@@ -10,4 +10,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> findAllByClientId(Long clientId);
 
     void deleteAllByClientId(Long clientId);
+
+    Boolean existsByClientId(Long clientId);
 }

@@ -80,7 +80,11 @@ public class AccountService {
     }
 
     public void deleteAccountsByClientId(Long clientId) {
-        accountRepository.deleteAllByClientId(clientId);
-        log.info("Accounts for client ID: {} have been deleted", clientId);
+        if(accountRepository.existsByClientId(clientId)) {
+            accountRepository.deleteAllByClientId(clientId);
+            log.info("Accounts for client ID: {} have been deleted", clientId);
+        } else {
+            throw new NotFoundException("Accounts with client ID '" + clientId + "' are not found");
+        }
     }
 }
