@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: client
+          uri: lb://CLIENT
+          predicates:
+            - Path=/api/{api-version}/clients/**
+        - id: account
+          uri: lb://ACCOUNT
+          predicates:
+            - Path=/api/{api-version}/accounts/**
+  zipkin:
+    base-url: http://localhost:9411
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
