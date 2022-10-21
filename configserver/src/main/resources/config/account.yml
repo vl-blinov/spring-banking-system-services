@@ -1,7 +1,9 @@
 server:
-  port: 8081
+  port: 8082
 
 spring:
+  application:
+    name: account
   datasource:
     url: jdbc:postgresql://localhost:5433/account_db
     username: account

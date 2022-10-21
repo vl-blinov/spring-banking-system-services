@@ -1,7 +1,9 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
+  application:
+    name: client
   datasource:
     url: jdbc:postgresql://localhost:5433/client_db
     username: client
