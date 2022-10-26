@@ -77,7 +77,7 @@ public class ClientService {
                 .stream()
                 .map(AccountResponse::getId)
                 .toList();
-        log.info("List of accounts IDs: {} for client with ID: {}", accountsIdList, clientId);
+        log.info("List of accounts IDs '{}' for client with ID: {}", accountsIdList, clientId);
         clientResponse.setAccountsIdList(accountsIdList);
         return clientResponse;
     }
@@ -87,6 +87,6 @@ public class ClientService {
         clientRepository.deleteById(clientId);
         log.info("Client deleted; client ID: {}", clientId);
         accountFeignClient.deleteAccountsByClientId(clientId);
-        log.info("Accounts for client ID: {} have been deleted", clientId);
+        log.info("Accounts for client ID '{}' have been deleted", clientId);
     }
 }
