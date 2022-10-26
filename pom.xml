@@ -14,7 +14,8 @@
     <module>account</module>
     <module>configserver</module>
     <module>eurekaserver</module>
-      <module>gatewayserver</module>
+    <module>gatewayserver</module>
+    <module>record</module>
   </modules>
 
   <properties>

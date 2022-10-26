@@ -9,7 +9,8 @@ services:
       POSTGRES_USER: client
       POSTGRES_PASSWORD: client
     volumes:
-      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+      - ./docker_postgres_account_init.sql:/docker-entrypoint-initdb.d/docker_postgres_account_init.sql
+      - ./docker_postgres_record_init.sql:/docker-entrypoint-initdb.d/docker_postgres_record_init.sql
     restart: always
   zipkin:
     image: openzipkin/zipkin
