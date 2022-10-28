@@ -5,13 +5,10 @@ spring:
   application:
     name: config-server
   profiles:
-    active: native
+    active: git
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/config
         git:
           uri: https://github.com/vl-blinov/spring-banking-system-services-config.git
-  zipkin:
-    base-url: http://localhost:9411
+          search-paths: /config
