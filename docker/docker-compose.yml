@@ -11,9 +11,66 @@ services:
     volumes:
       - ./docker_postgres_account_init.sql:/docker-entrypoint-initdb.d/docker_postgres_account_init.sql
       - ./docker_postgres_record_init.sql:/docker-entrypoint-initdb.d/docker_postgres_record_init.sql
-    restart: always
+    restart: on-failure
+    networks:
+      - backend
+  configserver:
+    image: vlblinov/configserver:1.0-SNAPSHOT
+    container_name: configserver
+    ports:
+      - "8071:8071"
+    restart: on-failure
+    networks:
+      - backend
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
     ports:
       - "9411:9411"
+    restart: on-failure
+    networks:
+      - backend
+  eurekaserver:
+    image: vlblinov/eurekaserver:1.0-SNAPSHOT
+    container_name: eurekaserver
+    ports:
+      - "8761:8761"
+    restart: on-failure
+    networks:
+      - backend
+  gatewayserver:
+    image: vlblinov/gatewayserver:1.0-SNAPSHOT
+    container_name: gatewayserver
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    networks:
+      - backend
+  client:
+    image: vlblinov/client:1.0-SNAPSHOT
+    container_name: client
+    ports:
+      - "8081:8081"
+    restart: on-failure
+    networks:
+      - backend
+  account:
+    image: vlblinov/account:1.0-SNAPSHOT
+    container_name: account
+    ports:
+      - "8082:8082"
+    restart: on-failure
+    networks:
+      - backend
+  record:
+    image: vlblinov/record:1.0-SNAPSHOT
+    container_name: record
+    ports:
+      - "8083:8083"
+    restart: on-failure
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
