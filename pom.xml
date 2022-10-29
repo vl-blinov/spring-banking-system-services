@@ -13,6 +13,9 @@
     <module>client</module>
     <module>account</module>
     <module>configserver</module>
+    <module>eurekaserver</module>
+    <module>gatewayserver</module>
+    <module>record</module>
   </modules>
 
   <properties>
@@ -21,8 +24,10 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.plugin.version>2.7.4</maven.plugin.version>
+    <jib.maven.plugin.version>3.3.0</jib.maven.plugin.version>
     <spring.boot.version>2.7.4</spring.boot.version>
     <spring.cloud.version>2021.0.3</spring.cloud.version>
+    <image>vlblinov/${project.artifactId}:${project.version}</image>
   </properties>
 
   <dependencyManagement>
@@ -51,6 +56,34 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <version>${maven.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>${jib.maven.plugin.version}</version>
+          <configuration>
+            <from>
+              <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
+              <platforms>
+                <platform>
+                  <architecture>arm64</architecture>
+                  <os>linux</os>
+                </platform>
+                <platform>
+                  <architecture>amd64</architecture>
+                  <os>linux</os>
+                </platform>
+              </platforms>
+            </from>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>build</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>

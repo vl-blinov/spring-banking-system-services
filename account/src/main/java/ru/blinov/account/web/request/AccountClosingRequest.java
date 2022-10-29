@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class AccountClosingRequest {
-    private Long accountId;
+    private Long accId;
 }
